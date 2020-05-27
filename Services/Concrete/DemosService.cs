@@ -138,54 +138,54 @@ namespace Services.Concrete
 							Demo demo = await GetDemoHeaderAsync(file);
 							if (demo != null)
 							{
-								// Skip if the demo is already in the current demos list
-								if ((currentDemos != null && currentDemos.Contains(demo)) || demoHeaderList.Contains(demo))
-									continue;
-								demoHeaderList.Add(demo);
-							}
+                                // Skip if the demo is already in the current demos list
+                                //if ((currentDemos != null && currentDemos.Contains(demo)) || demoHeaderList.Contains(demo))
+                                //	continue;
+                                demos.Add(demo);
+                            }
 						}
 					}
 				}
 
-				// Process each demo header
-				foreach (Demo demo in demoHeaderList)
-				{
-					// retrieve basic demo data
-					DemoBasicData demoData = demoBasicDataList.FirstOrDefault(d => d.Id == demo.Id);
-					if (demoData == null)
-					{
-						// if basic data are not found, add it to cache
-						demoData = await _cacheService.AddDemoBasicDataAsync(demo);
-					}
-					// Skip if the player isn't in the demo
-					if (ShowOnlyAccountDemos && SelectedStatsAccountSteamId != 0
-						&& !demoData.SteamIdList.Contains(SelectedStatsAccountSteamId))
-						continue;
+				//// Process each demo header
+				//foreach (Demo demo in demoHeaderList)
+				//{
+				//	//// retrieve basic demo data
+				//	DemoBasicData demoData = demoBasicDataList.FirstOrDefault(d => d.Id == demo.Id);
+				//	if (demoData == null)
+				//	{
+				//		// if basic data are not found, add it to cache
+				//		demoData = await _cacheService.AddDemoBasicDataAsync(demo);
+				//	}
+				//	// Skip if the player isn't in the demo
+				//	if (ShowOnlyAccountDemos && SelectedStatsAccountSteamId != 0
+				//		&& !demoData.SteamIdList.Contains(SelectedStatsAccountSteamId))
+				//		continue;
 
-					// store basic data to filter on date quickly
-					tempDemoBasicDataList.Add(demoData);
-				}
+				//	// store basic data to filter on date quickly
+				//	tempDemoBasicDataList.Add(demoData);
+				//}
 
-				tempDemoBasicDataList.Sort((d1, d2) => d2.Date.CompareTo(d1.Date));
-				if (demoSize > 0) tempDemoBasicDataList = tempDemoBasicDataList.Take(demoSize).ToList();
+				//tempDemoBasicDataList.Sort((d1, d2) => d2.Date.CompareTo(d1.Date));
+				//if (demoSize > 0) tempDemoBasicDataList = tempDemoBasicDataList.Take(demoSize).ToList();
 
-				foreach (DemoBasicData basicData in tempDemoBasicDataList)
-				{
-					Demo demo;
-					bool hasDemoInCache = _cacheService.HasDemoInCache(basicData.Id);
-					if (hasDemoInCache)
-					{
-						demo = await GetDemoDataByIdAsync(basicData.Id);
-					}
-					else
-					{
-						demo = demoHeaderList.First(d => d.Id == basicData.Id);
-					}
-					if (currentDemos == null || !currentDemos.Contains(demo))
-					{
-						demos.Add(demo);
-					}
-				}
+				//foreach (DemoBasicData basicData in tempDemoBasicDataList)
+				//{
+				//	Demo demo;
+				//	bool hasDemoInCache = _cacheService.HasDemoInCache(basicData.Id);
+				//	if (hasDemoInCache)
+				//	{
+				//		demo = await GetDemoDataByIdAsync(basicData.Id);
+				//	}
+				//	else
+				//	{
+				//		demo = demoHeaderList.First(d => d.Id == basicData.Id);
+				//	}
+				//	if (currentDemos == null || !currentDemos.Contains(demo))
+				//	{
+				//		demos.Add(demo);
+				//	}
+				//}
 			}
 
 			return demos;

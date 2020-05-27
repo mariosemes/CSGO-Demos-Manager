@@ -12,6 +12,8 @@
 
 		public string RealName { get; set; }
 
+		public int LastLogoff { get; set; }
+
 		public int CommentPermission { get; set; }
 
 		public string ProfileUrl { get; set; }

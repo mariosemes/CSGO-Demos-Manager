@@ -22,9 +22,6 @@
 												 False="{x:Static properties:Resources.No}"/>
 			<converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" True="Visible"/>
 			<converters:BooleanInvertedConverter x:Key="BooleanInvertedConverter" />
-			<converters:IntToStringConverter x:Key="IntToStringConverter" />
-			<converters:SteamAccountStatusToStringConverter x:Key="SteamAccountStatusToStringConverter" />
-			<converters:SteamAccountVisibilityToStringConverter x:Key="SteamAccountVisibilityToStringConverter" />
 			<converters:SteamEconomyBanStatusToStringConverter x:Key="SteamEconomyBanStatusToStringConverter" />
 		</ResourceDictionary>
 	</UserControl.Resources>
@@ -245,15 +242,19 @@
 									HeaderStyle="{StaticResource ProfileUrlHeader}" />
 				<DataGridTextColumn Width="Auto"
 									Header="{x:Static properties:Resources.Status}"
-									Binding="{Binding CurrentStatus, Converter={StaticResource SteamAccountStatusToStringConverter}}"
+									Binding="{Binding CurrentStatusString}"
 									HeaderStyle="{StaticResource CurrentStatusHeader}" />
 				<DataGridTextColumn Width="Auto"
 									Header="{x:Static properties:Resources.HeaderAccountVisibility}"
-									Binding="{Binding CommunityVisibilityState, Converter={StaticResource SteamAccountVisibilityToStringConverter}}"
+									Binding="{Binding PublicProfile}"
 									HeaderStyle="{StaticResource PublicProfileHeader}" />
 				<DataGridTextColumn Width="Auto"
+									Header="{x:Static properties:Resources.HeaderLastConnection}"
+									Binding="{Binding LastLogOffDate}"
+									HeaderStyle="{StaticResource LastLogOffHeader}" />
+				<DataGridTextColumn Width="Auto"
 									Header="{x:Static properties:Resources.HeaderProfileSetup}"
-									Binding="{Binding ProfileState, Converter={StaticResource IntToStringConverter}}"
+									Binding="{Binding ProfileStateString}"
 									HeaderStyle="{StaticResource ProfileStateHeader}" />
 				<DataGridTextColumn Width="Auto"
 									Header="{x:Static properties:Resources.HeaderToolTipIsVacBanned}"

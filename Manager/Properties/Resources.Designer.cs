@@ -3526,6 +3526,15 @@ namespace Manager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Last connection.
+        /// </summary>
+        public static string HeaderLastConnection {
+            get {
+                return ResourceManager.GetString("HeaderLastConnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Killer \ Victim.
         /// </summary>
         public static string HeaderMatrixKillerVictim {
@@ -4278,6 +4287,15 @@ namespace Manager.Properties {
         public static string HeaderToolTipKnifeKills {
             get {
                 return ResourceManager.GetString("HeaderToolTipKnifeKills", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last online.
+        /// </summary>
+        public static string HeaderToolTipLastConnexion {
+            get {
+                return ResourceManager.GetString("HeaderToolTipLastConnexion", resourceCulture);
             }
         }
         

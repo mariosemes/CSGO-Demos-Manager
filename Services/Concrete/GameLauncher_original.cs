@@ -27,7 +27,7 @@ namespace Services.Concrete
 		private const int STUFF_BEGIN_DELAY = 5; // Seconds before the playback start playing and focus on the player
 		private const int STUFF_END_DELAY = 3; // Seconds before the playback fast forward to the next stuff when the previous one is done
 		private const int MOLOTOV_TIME = 8; // Seconds average waiting time for a molotov end
-		private const int BEGIN_ROUND_SKIP = 15; // Seconds to skip at the beginning of the round when watching player
+		private const int BEGIN_ROUND_SKIP = 10; // Seconds to skip at the beginning of the round when watching player
 		private const string ARGUMENT_SEPARATOR = " ";
 		/// <summary>
 		/// Launcher configuration
@@ -455,9 +455,9 @@ namespace Services.Concrete
 			nextTick = demo.Rounds[0].Tick + skipBeginningRoundCount;
 			generated += string.Format(Properties.Resources.skip_ahead, ++actionCount, 0, nextTick);
 			generated += string.Format(Properties.Resources.spec_player, ++actionCount, nextTick + 1, _config.FocusPlayerSteamId);
-			//generated += string.Format(Properties.Resources.execute_command, ++actionCount, nextTick + 2, "demo_timescale 5");
-			//generated += string.Format(Properties.Resources.execute_command, ++actionCount, nextTick + 0.5 * skipBeginningRoundCount, "demo_timescale 2");
-			//generated += string.Format(Properties.Resources.execute_command, ++actionCount, nextTick + 1 * skipBeginningRoundCount, "demo_timescale 1");
+			generated += string.Format(Properties.Resources.execute_command, ++actionCount, nextTick + 2, "demo_timescale 5");
+			generated += string.Format(Properties.Resources.execute_command, ++actionCount, nextTick + 0.5 * skipBeginningRoundCount, "demo_timescale 2");
+			generated += string.Format(Properties.Resources.execute_command, ++actionCount, nextTick + 1 * skipBeginningRoundCount, "demo_timescale 1");
 
 			foreach (Round r in demo.Rounds)
 			{
@@ -465,19 +465,16 @@ namespace Services.Concrete
 				if (r.Number == demo.Rounds.Count && !playerDeaths.Any(k => k.RoundNumber == r.Number))
 				{
 					// end the demo after the round ends
-					generated += string.Format(Properties.Resources.stop_playback, ++actionCount, r.EndTick + skipBeginningRoundCount);
+					generated += string.Format(Properties.Resources.stop_playback, ++actionCount, r.EndTick);
 					break;
 				}
 				// last round and player gets killed
 				else if (r.Number == demo.Rounds.Count)
 				{
-                    // end the demo after the round ends
-                    generated += string.Format(Properties.Resources.stop_playback, ++actionCount, r.EndTick + skipBeginningRoundCount);
-                    break;
-                    // end the demo when the player dies
-                    //startTick = playerDeaths.Where(k => k.RoundNumber == r.Number).First().Tick + nextActionDelayCount;
-					//generated += string.Format(Properties.Resources.stop_playback, ++actionCount, startTick);
-					//break;
+					// end the demo when the player dies
+					startTick = playerDeaths.Where(k => k.RoundNumber == r.Number).First().Tick + nextActionDelayCount;
+					generated += string.Format(Properties.Resources.stop_playback, ++actionCount, startTick);
+					break;
 				}
 
 				// player dies this round, skip to next round when player dies
@@ -489,16 +486,16 @@ namespace Services.Concrete
 				// player doesn't die this round, show full round
 				else
 				{
-					startTick = r.EndTickOfficially - nextActionDelayCount;
+					startTick = r.EndTickOfficially;
 					nextTick = r.EndTickOfficially + skipBeginningRoundCount;
 				}
 
 				// skips ahead and fast forwards through first few seconds of the round
 				generated += string.Format(Properties.Resources.skip_ahead, ++actionCount, startTick, nextTick);
-                //generated += string.Format(Properties.Resources.execute_command, ++actionCount, nextTick + 1, "demo_timescale 5");
-                //generated += string.Format(Properties.Resources.execute_command, ++actionCount, nextTick + 0.5 * skipBeginningRoundCount, "demo_timescale 2");
-                //generated += string.Format(Properties.Resources.execute_command, ++actionCount, nextTick + 1 * skipBeginningRoundCount, "demo_timescale 1");
-            }
+				generated += string.Format(Properties.Resources.execute_command, ++actionCount, nextTick + 1, "demo_timescale 5");
+				generated += string.Format(Properties.Resources.execute_command, ++actionCount, nextTick + 0.5 * skipBeginningRoundCount, "demo_timescale 2");
+				generated += string.Format(Properties.Resources.execute_command, ++actionCount, nextTick + 1 * skipBeginningRoundCount, "demo_timescale 1");
+			}
 
 			string content = string.Format(Properties.Resources.main, generated);
 			File.WriteAllText(demo.GetVdmFilePath(), content);

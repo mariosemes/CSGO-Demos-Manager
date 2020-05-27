@@ -23,6 +23,7 @@ namespace Manager
 		public static string StartUpWindow { get; set; } = "demos";
 		public static string DemoFilePath { get; set; }
 		public static string[] Contributors = {
+			"Sema",
 			"0BuRner",
 			"Ezro",
 			"green-s",
@@ -33,7 +34,7 @@ namespace Manager
 			"CorySanin",
 		};
 		public static string[] Translators = {
-			"FisherMan aka. deathles乃夫 / AlexWIT from 無盡國度 / ❤Elsa (Chinese Simplified)",
+			"FisherMan aka. deathles乃夫 (Chinese simplified)",
 			"Allan \"Michael\" Simonsen (Danish)",
 			"Leonardo / RedDeadLuigi / mvinoba (Brazilian)",
 			"Spidersouris (French)",

@@ -11,12 +11,12 @@ namespace Core
 {
 	public static class AppSettings
 	{
-		public static string AUTHOR = "AkiVer";
-		public static string APP_NAME = "CSGO Demos Manager";
+		public static string AUTHOR = "Sema";
+		public static string APP_NAME = "CSGO Sema Demos Manager";
 		public static string APP_WEBSITE = "https://csgo-demos-manager.com";
 		public static Version APP_VERSION = new Version("2.13.11");
 		private const string MATCH_LIST_FILENAME = "matches.dat";
-		public const string PROCESS_NAME = "CSGODemosManager";
+		public const string PROCESS_NAME = "CSGOSemaDemosManager";
 		public const string CSGO_PROCESS_NAME = "csgo";
 		public const string BOT_PROCESS_NAME = "CSGOSuspectsBot";
 		public const string RESOURCES_URI = "pack://application:,,,/csgodm.resources;component/";
